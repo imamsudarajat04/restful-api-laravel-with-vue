@@ -8,4 +8,5 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 
 
 ## Installation Dependencies
-- [Vue Router](npm install vue-router@4.1.6)
+- [VueRouter](npm install vue-router@4.1.6)
+- [Axios](npm install axios@1.3.4)
