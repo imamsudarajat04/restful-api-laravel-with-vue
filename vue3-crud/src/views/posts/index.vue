@@ -21,7 +21,17 @@
 
     onMounted(() => {
         fetchDataPosts();
-    })
+    });
+
+    //method delete post
+    const deletePost = async (id) => {
+        //delete post with API
+        await api.delete(`/api/posts/${id}`)
+        .then(() => {
+            //call method "fetchDataPosts"
+            fetchDataPosts();
+        })
+    };
 </script>
 
 <template>
@@ -32,15 +42,16 @@
                 <div class="card border-0 rounded shadow">
                     <div class="card-body">
                         <table class="table table-borde">
-                            <thead class="bg-dark text-white">
+                            <thead class="bg-dark text-white text-center">
                                 <tr>
+                                    <th scope="col">No</th>
                                     <th scope="col">Image</th>
                                     <th scope="col">Title</th>
                                     <th scope="col">Content</th>
                                     <th scope="col" style="width:15%">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="text-center">
                                 <tr v-if="posts.length == 0">
                                     <td colspan="4" class="text-center">
                                         <div class="alert alert-danger mb-0">
@@ -49,6 +60,7 @@
                                     </td>
                                 </tr>
                                 <tr v-else v-for="(post, index) in posts" :key="index">
+                                    <td>{{ index + 1 }}</td>
                                     <td class="text-center">
                                         <img :src="post.image" width="200" alt="Image" class="rounded-3">
                                     </td>
@@ -56,7 +68,7 @@
                                     <td>{{ post.content }}</td>
                                     <td class="text-center">
                                         <router-link :to="{ name: 'posts.edit', params:{id: post.id}}" class="btn btn-sm btn-primary rounded-sm shadow border-0 me-2">EDIT</router-link>
-                                        <button class="btn btn-sm btn-danger rounded-sm shadow border-0">DELETE</button>
+                                        <button @click.prevent="deletePost(post.id)" class="btn btn-sm btn-danger rounded-sm shadow border-0">DELETE</button>
                                     </td>
                                 </tr>
                             </tbody>
